@@ -1,0 +1,274 @@
+/* ─── LeakGuard — style.css ─────────────────────────────────────── */
+
+:root {
+    --bg: #0f1117;
+    --bg-card: #1a1d27;
+    --bg-input: #12141c;
+    --border: #2a2d3a;
+    --text: #e1e4ed;
+    --text-dim: #8b8fa3;
+    --accent: #6c63ff;
+    --accent-hover: #5a52e0;
+    --high: #ff4d6a;
+    --high-bg: rgba(255, 77, 106, 0.1);
+    --medium: #ffb84d;
+    --medium-bg: rgba(255, 184, 77, 0.1);
+    --low: #4db8ff;
+    --low-bg: rgba(77, 184, 255, 0.1);
+    --green: #4dff88;
+    --green-bg: rgba(77, 255, 136, 0.1);
+    --radius: 12px;
+    --radius-sm: 8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* ─── Header ─── */
+.header { text-align: center; margin-bottom: 2rem; }
+.logo { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+.logo-icon { font-size: 2.5rem; }
+.logo h1 { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.tagline { font-size: 1.25rem; color: var(--text-dim); font-style: italic; margin-bottom: 0.5rem; }
+.subtitle { color: var(--text-dim); font-size: 0.95rem; max-width: 600px; margin: 0 auto; }
+
+/* ─── Info banner ─── */
+.info-banner {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+}
+.info-banner strong { color: var(--text); }
+.info-banner pre { background: var(--bg-input); padding: 0.5rem; border-radius: 4px; margin-top: 0.5rem; overflow-x: auto; }
+
+/* ─── Buttons ─── */
+.btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.6rem 1.2rem;
+    border: none; border-radius: var(--radius-sm);
+    font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+    text-decoration: none;
+}
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn-secondary { background: var(--bg-card); color: var(--text); border: 1px solid var(--border); }
+.btn-secondary:hover { border-color: var(--accent); }
+.btn-accent { background: linear-gradient(135deg, #6c63ff, #a78bfa); color: #fff; }
+.btn-accent:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* ─── Input Section ─── */
+.input-section { margin-bottom: 2rem; }
+.input-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem; }
+.input-header h2 { font-size: 1.1rem; }
+.input-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.file-upload { cursor: pointer; }
+
+textarea {
+    width: 100%;
+    min-height: 300px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.85rem;
+    padding: 1rem;
+    resize: vertical;
+    line-height: 1.5;
+    tab-size: 4;
+}
+textarea:focus { outline: none; border-color: var(--accent); }
+textarea::placeholder { color: var(--text-dim); }
+
+.review-actions { display: flex; align-items: center; gap: 1rem; margin-top: 0.75rem; }
+.loading-text { color: var(--accent); font-weight: 600; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+/* ─── Score Badge ─── */
+.score-badge { text-align: center; margin-bottom: 2rem; }
+.score-circle {
+    display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 4px solid var(--accent);
+    margin-bottom: 0.75rem;
+}
+.score-value { font-size: 2rem; font-weight: 800; }
+.score-grade { font-size: 1.1rem; font-weight: 600; color: var(--text-dim); }
+.score-summary { color: var(--text-dim); }
+.llm-badge { font-size: 0.8rem; color: var(--accent); margin-top: 0.25rem; }
+
+.score-badge.grade-a .score-circle { border-color: var(--green); }
+.score-badge.grade-b .score-circle { border-color: #8bff4d; }
+.score-badge.grade-c .score-circle { border-color: var(--medium); }
+.score-badge.grade-d .score-circle { border-color: #ff8c4d; }
+.score-badge.grade-f .score-circle { border-color: var(--high); }
+
+/* ─── Findings ─── */
+.findings-container { display: flex; flex-direction: column; gap: 1rem; }
+
+.finding-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    border-left: 4px solid var(--border);
+}
+.finding-card.severity-HIGH { border-left-color: var(--high); background: var(--high-bg); }
+.finding-card.severity-MEDIUM { border-left-color: var(--medium); background: var(--medium-bg); }
+.finding-card.severity-LOW { border-left-color: var(--low); background: var(--low-bg); }
+
+.finding-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem; }
+.finding-title { font-weight: 700; font-size: 1rem; }
+.finding-meta { display: flex; gap: 0.5rem; align-items: center; flex-shrink: 0; }
+.severity-tag {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    padding: 0.2rem 0.5rem; border-radius: 4px;
+}
+.severity-tag.HIGH { background: var(--high); color: #fff; }
+.severity-tag.MEDIUM { background: var(--medium); color: #000; }
+.severity-tag.LOW { background: var(--low); color: #000; }
+.rule-tag { font-size: 0.7rem; color: var(--text-dim); background: var(--bg); padding: 0.2rem 0.5rem; border-radius: 4px; }
+.line-tag { font-size: 0.75rem; color: var(--text-dim); }
+
+.finding-snippet {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.8rem;
+    overflow-x: auto;
+    margin-bottom: 0.75rem;
+    white-space: pre;
+}
+
+.finding-why { color: var(--text-dim); margin-bottom: 0.75rem; font-size: 0.9rem; }
+.finding-explanation { margin-bottom: 0.75rem; font-size: 0.9rem; }
+.finding-explanation strong { color: var(--accent); }
+
+.finding-fix { position: relative; }
+.finding-fix h4 { font-size: 0.85rem; color: var(--green); margin-bottom: 0.5rem; }
+.fix-code {
+    background: var(--bg-input);
+    border: 1px solid var(--green);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.8rem;
+    overflow-x: auto;
+    white-space: pre;
+}
+.copy-btn {
+    position: absolute; top: 0; right: 0;
+    background: var(--bg-card); color: var(--text-dim); border: 1px solid var(--border);
+    border-radius: 4px; padding: 0.25rem 0.5rem; font-size: 0.75rem;
+    cursor: pointer;
+}
+.copy-btn:hover { color: var(--text); border-color: var(--accent); }
+
+/* ─── Prove It Section ─── */
+.prove-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+.prove-section h2 { margin-bottom: 0.5rem; }
+.prove-section > p { color: var(--text-dim); margin-bottom: 1rem; font-size: 0.9rem; }
+
+.prove-results { margin-top: 1.5rem; }
+
+.prove-bars { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1rem; }
+.prove-bar-group label { font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 0.25rem; }
+.prove-bar {
+    height: 36px;
+    background: var(--bg-input);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+.prove-bar-fill {
+    height: 100%;
+    border-radius: var(--radius-sm);
+    transition: width 1s ease-out;
+    display: flex; align-items: center; padding-left: 0.75rem;
+    font-size: 0.85rem; font-weight: 700; color: #fff;
+}
+.prove-bar-fill.leaky { background: linear-gradient(90deg, var(--high), #ff6b8a); }
+.prove-bar-fill.correct { background: linear-gradient(90deg, var(--green), #8bff4d); color: #000; }
+
+.prove-score { font-weight: 700; font-size: 0.9rem; margin-top: 0.25rem; display: block; }
+.prove-description { font-weight: 600; font-size: 1rem; text-align: center; margin: 1rem 0 0.5rem; }
+.prove-method { color: var(--text-dim); font-size: 0.8rem; text-align: center; }
+
+/* ─── Metrics Table ─── */
+.metrics-section { margin-bottom: 2rem; }
+.metrics-section h3 { margin: 1.5rem 0 0.75rem; }
+
+.metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    margin-bottom: 1rem;
+}
+.metrics-table th, .metrics-table td {
+    padding: 0.6rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+.metrics-table th { background: var(--bg-input); font-weight: 600; font-size: 0.85rem; color: var(--text-dim); }
+.metrics-table td { font-size: 0.9rem; }
+
+/* ─── Footer ─── */
+.footer { text-align: center; padding-top: 2rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+.footer a { color: var(--accent); text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+.footer-note { color: var(--text-dim); font-size: 0.8rem; margin-top: 0.5rem; }
+
+/* ─── No findings ─── */
+.no-findings {
+    text-align: center;
+    padding: 2rem;
+    background: var(--green-bg);
+    border: 1px solid var(--green);
+    border-radius: var(--radius);
+    color: var(--green);
+    font-weight: 600;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 640px) {
+    .container { padding: 1rem; }
+    .logo h1 { font-size: 1.8rem; }
+    .input-header { flex-direction: column; align-items: stretch; }
+    .input-actions { justify-content: center; }
+    textarea { min-height: 200px; }
+    .finding-header { flex-direction: column; }
+    .score-circle { width: 100px; height: 100px; }
+    .score-value { font-size: 1.5rem; }
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeakGuard — Evaluation Metrics</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <a href="/" style="text-decoration:none;color:inherit;">
+                    <span class="logo-icon">🛡️</span>
+                    <h1>LeakGuard</h1>
+                </a>
+            </div>
+            <h2>Evaluation Metrics</h2>
+        </header>
+
+        {% if results %}
+        <div class="metrics-section">
+            <div class="info-banner">
+                <strong>⚠️ Honest benchmark note:</strong>
+                This is a small, self-built evaluation set ({{ results.total_cases }} cases) designed
+                to verify rule correctness, not an industry benchmark. Results should be interpreted
+                as unit-test-level validation, not as generalization guarantees.
+            </div>
+
+            <h3>Overall Results</h3>
+            <table class="metrics-table">
+                <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                </tr>
+                <tr><td>Total cases</td><td>{{ results.total_cases }}</td></tr>
+                <tr><td>Buggy cases</td><td>{{ results.buggy_cases }}</td></tr>
+                <tr><td>Clean cases</td><td>{{ results.clean_cases }}</td></tr>
+                <tr><td>Overall Precision</td><td>{{ "%.1f"|format(results.overall_precision * 100) }}%</td></tr>
+                <tr><td>Overall Recall</td><td>{{ "%.1f"|format(results.overall_recall * 100) }}%</td></tr>
+                <tr><td>Overall F1</td><td>{{ "%.1f"|format(results.overall_f1 * 100) }}%</td></tr>
+                <tr><td>False positives on clean code</td><td>{{ results.false_positives_on_clean }}</td></tr>
+            </table>
+
+            {% if results.per_rule %}
+            <h3>Per-Rule Results</h3>
+            <table class="metrics-table">
+                <tr>
+                    <th>Rule</th>
+                    <th>TP</th>
+                    <th>FP</th>
+                    <th>FN</th>
+                    <th>Precision</th>
+                    <th>Recall</th>
+                    <th>F1</th>
+                </tr>
+                {% for rule_id, stats in results.per_rule.items() %}
+                <tr>
+                    <td>{{ rule_id }}</td>
+                    <td>{{ stats.tp }}</td>
+                    <td>{{ stats.fp }}</td>
+                    <td>{{ stats.fn }}</td>
+                    <td>{{ "%.0f"|format(stats.precision * 100) }}%</td>
+                    <td>{{ "%.0f"|format(stats.recall * 100) }}%</td>
+                    <td>{{ "%.0f"|format(stats.f1 * 100) }}%</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="info-banner">
+            <p>No evaluation results available yet. Run the evaluation:</p>
+            <pre>python eval/run_eval.py</pre>
+        </div>
+        {% endif %}
+
+        <footer class="footer">
+            <p><a href="/">← Back to LeakGuard</a></p>
+        </footer>
+    </div>
+</body>
+</html>

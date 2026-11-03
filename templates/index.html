@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeakGuard — AI Code Reviewer for ML Pipelines</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🛡️</span>
+                <h1>LeakGuard</h1>
+            </div>
+            <p class="tagline">"Your model scored 97%. Was it real?"</p>
+            <p class="subtitle">
+                AI-powered code reviewer for ML pipelines. Detects data leakage, wrong evaluation,
+                and irreproducible pipelines — bugs that silently ruin your results.
+            </p>
+        </header>
+
+        <!-- Info banner -->
+        <div class="info-banner">
+            <strong>What is data leakage?</strong>
+            When information from outside the training set (like test data or future values)
+            leaks into model training, inflating performance metrics. The model appears to work
+            great but fails in production.
+        </div>
+
+        <!-- Input Section -->
+        <section class="input-section">
+            <div class="input-header">
+                <h2>Paste your ML code</h2>
+                <div class="input-actions">
+                    <button id="loadExample" class="btn btn-secondary">📋 Load Vulnerable Example</button>
+                    <label class="btn btn-secondary file-upload">
+                        📁 Upload .py / .ipynb
+                        <input type="file" id="fileInput" accept=".py,.ipynb" hidden>
+                    </label>
+                </div>
+            </div>
+            <textarea id="codeInput" placeholder="Paste your Python ML code here, or load the example to see LeakGuard in action..."></textarea>
+            <div class="review-actions">
+                <button id="reviewBtn" class="btn btn-primary">🔍 Review Code</button>
+                <span id="loadingText" class="loading-text" hidden>Analyzing...</span>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="results-section" hidden>
+            <!-- Score Badge -->
+            <div id="scoreBadge" class="score-badge">
+                <div class="score-circle">
+                    <span id="scoreValue" class="score-value">--</span>
+                    <span id="scoreGrade" class="score-grade">-</span>
+                </div>
+                <p id="scoreSummary" class="score-summary"></p>
+                <p id="llmBadge" class="llm-badge" hidden></p>
+            </div>
+
+            <!-- Findings -->
+            <div id="findingsContainer" class="findings-container"></div>
+        </section>
+
+        <!-- Prove It Section -->
+        <section class="prove-section">
+            <h2>🧪 Prove It — Live Experiment</h2>
+            <p>Don't just take our word for it. Run a live experiment that trains two identical models
+               — one with a data leak, one without — and see the difference.</p>
+            <button id="proveBtn" class="btn btn-accent">Run Experiment</button>
+            <div id="proveResults" class="prove-results" hidden>
+                <div class="prove-bars">
+                    <div class="prove-bar-group">
+                        <label>Leaky Pipeline</label>
+                        <div class="prove-bar">
+                            <div id="leakyBar" class="prove-bar-fill leaky"></div>
+                        </div>
+                        <span id="leakyScore" class="prove-score"></span>
+                    </div>
+                    <div class="prove-bar-group">
+                        <label>Correct Pipeline</label>
+                        <div class="prove-bar">
+                            <div id="correctBar" class="prove-bar-fill correct"></div>
+                        </div>
+                        <span id="correctScore" class="prove-score"></span>
+                    </div>
+                </div>
+                <p id="proveDescription" class="prove-description"></p>
+                <p id="proveMethod" class="prove-method"></p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="/metrics">📊 Evaluation Metrics</a> ·
+                <a href="https://github.com/" target="_blank">GitHub</a> ·
+                Neural Storm 2026 (JNTUH)
+            </p>
+            <p class="footer-note">
+                All bug detection is deterministic static analysis (Python AST).
+                Gemini AI provides explanations only — never decides what is a bug.
+            </p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
