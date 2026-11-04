@@ -147,8 +147,8 @@ flowchart LR
 
 ```bash
 # Clone the repository
-git clone https://github.com/<your-repo>/mirageml.git
-cd mirageml
+git clone https://github.com/mohi0005/mirage.git
+cd mirage
 
 # Create virtual environment (recommended)
 python -m venv venv
