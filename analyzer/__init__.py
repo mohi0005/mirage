@@ -1,4 +1,4 @@
-"""LeakGuard analyzer package — deterministic ML code review."""
+"""MirageML analyzer package — deterministic ML code review."""
 
 from .parser import parse_source
 from .flow import FlowTracker

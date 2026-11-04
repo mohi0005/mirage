@@ -1,5 +1,5 @@
 """
-app.py — Flask application for LeakGuard.
+app.py — Flask application for MirageML.
 
 Routes:
     GET  /              → Main UI
@@ -77,7 +77,7 @@ def health():
     """Health check endpoint."""
     return jsonify({
         "status": "ok",
-        "service": "LeakGuard",
+        "service": "MirageML",
         "gemini_configured": bool(os.environ.get("GEMINI_API_KEY", "").strip()),
     })
 

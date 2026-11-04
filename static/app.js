@@ -1,4 +1,4 @@
-/* ─── LeakGuard — app.js ─────────────────────────────────────────── */
+/* ─── MirageML — app.js ─────────────────────────────────────────── */
 
 document.addEventListener("DOMContentLoaded", () => {
     const codeInput = document.getElementById("codeInput");

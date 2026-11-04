@@ -1,6 +1,6 @@
-# LeakGuard — AI Code Reviewer for ML Pipelines
+# MirageML — AI Code Reviewer for ML Pipelines
 
-> Your model scored 97%. Was it real?
+> Your model scored 97%. Was it real — or just a mirage?
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg) ![Python](https://img.shields.io/badge/python-3.11+-green.svg) ![Flask](https://img.shields.io/badge/flask-3.0-red.svg) ![Gemini](https://img.shields.io/badge/Gemini-2.5--flash-purple.svg)
 
@@ -16,7 +16,7 @@
 
 ## Headline Result
 
-On our 28-case evaluation set, LeakGuard achieves **100% precision and 100% recall** with **0 false positives on clean code**. The "Prove It" live experiment demonstrates an **8.3 percentage-point accuracy gap** caused by a single data leak — same data, same model, different results.
+On our 28-case evaluation set, MirageML achieves **100% precision and 100% recall** with **0 false positives on clean code**. The "Prove It" live experiment demonstrates an **8.3 percentage-point accuracy gap** caused by a single data leak — same data, same model, different results.
 
 ## The Problem
 
@@ -30,7 +30,7 @@ The model looks great in testing and **fails in production**. These bugs are inv
 
 ## Our Solution
 
-**LeakGuard** reviews Python ML scripts and Jupyter notebooks, finds these specific bugs with **deterministic static analysis** (Python `ast` module), proves the damage with a **live experiment**, and uses **Google Gemini** to explain the impact and write corrected code.
+**MirageML** reviews Python ML scripts and Jupyter notebooks, finds these specific bugs with **deterministic static analysis** (Python `ast` module), proves the damage with a **live experiment**, and uses **Google Gemini** to explain the impact and write corrected code.
 
 ### Core Design Principle
 
@@ -147,8 +147,8 @@ flowchart LR
 
 ```bash
 # Clone the repository
-git clone https://github.com/<your-repo>/leakguard.git
-cd leakguard
+git clone https://github.com/<your-repo>/mirageml.git
+cd mirageml
 
 # Create virtual environment (recommended)
 python -m venv venv
@@ -205,7 +205,7 @@ gunicorn app:app --bind 0.0.0.0:5000
 ## Project Structure
 
 ```
-leakguard/
+mirageml/
 ├── app.py                    # Flask app and routes
 ├── analyzer/
 │   ├── __init__.py

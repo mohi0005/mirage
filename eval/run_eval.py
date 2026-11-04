@@ -1,5 +1,5 @@
 """
-run_eval.py — Evaluation script for LeakGuard detection rules.
+run_eval.py — Evaluation script for MirageML detection rules.
 
 Runs the analyzer (rules only, no LLM) on labelled snippets in eval/cases/
 and reports per-rule and overall precision, recall, and F1 score.
@@ -145,7 +145,7 @@ def write_results(results: dict, results_path: Path, metrics_path: Path) -> None
 
     # Markdown
     md_lines = [
-        "# LeakGuard Evaluation Metrics",
+        "# MirageML Evaluation Metrics",
         "",
         "> **Note:** This is a small, self-built evaluation set designed to verify",
         "> rule correctness, not an industry benchmark.",
@@ -193,7 +193,7 @@ def main():
         print("ERROR: eval/labels.json not found")
         sys.exit(1)
 
-    print("LeakGuard Evaluation")
+    print("MirageML Evaluation")
     print("=" * 50)
 
     cases, labels = load_cases(cases_dir, labels_path)
