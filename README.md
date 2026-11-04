@@ -4,7 +4,7 @@
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg) ![Python](https://img.shields.io/badge/python-3.11+-green.svg) ![Flask](https://img.shields.io/badge/flask-3.0-red.svg) ![Gemini](https://img.shields.io/badge/Gemini-2.5--flash-purple.svg)
 
-**Live demo:** [https://0bcc11ac082c8f.lhr.life](https://0bcc11ac082c8f.lhr.life) | **Demo video:** [VIDEO_LINK]
+**Live demo:** [https://d6bec14764f4e9.lhr.life](https://d6bec14764f4e9.lhr.life) | **Demo video:** [VIDEO_LINK]
 
 ## Hackathon Details
 
