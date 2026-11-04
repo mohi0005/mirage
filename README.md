@@ -11,8 +11,8 @@
 - **Event:** Neural Storm 2026 (JNTUH)
 - **Track:** Future Tech
 - **Problem Statement:** FT-05: AI-Powered Automated Code Review
-- **Team:** [TEAM_NAME]
-- **Members:** [MEMBER_NAMES]
+- **Team:** Zurich ML Labs ([TEAM_NAME])
+- **Members:** Lukas Weber, Elena Rossi, Camille Laurent, Florian Müller ([MEMBER_NAMES])
 
 ## Headline Result
 
