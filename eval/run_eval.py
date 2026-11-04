@@ -85,7 +85,7 @@ def run_evaluation(cases: dict, labels: dict) -> dict:
             false_positives_on_clean += 1
             print(f"  FALSE POSITIVE on {filename}: {detected}")
 
-        status = "✓" if detected == expected else "✗"
+        status = "OK" if detected == expected else "MISS"
         results_detail.append({
             "file": filename,
             "expected": sorted(expected),

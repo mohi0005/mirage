@@ -254,9 +254,17 @@ class FlowTracker:
                 return info
 
             # Method call on a known variable: var.method(...)
+            # For transform / fit_transform / fit_resample, the result inherits
+            # the state of the DATA argument, not the transformer object.
             if isinstance(value, ast.Call) and isinstance(value.func, ast.Attribute):
                 obj_name = self._get_name(value.func.value)
                 method_name = value.func.attr
+                data_methods = {"transform", "fit_transform", "predict",
+                                "fit_resample", "fit_sample", "predict_proba"}
+                if obj_name and method_name in data_methods and value.args:
+                    first_arg = self._get_name(value.args[0])
+                    if first_arg and first_arg in self.vars:
+                        return VarInfo(state=self.vars[first_arg].state, line=line)
                 if obj_name and obj_name in self.vars:
                     parent_state = self.vars[obj_name].state
                     return VarInfo(state=parent_state, line=line)

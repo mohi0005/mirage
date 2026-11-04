@@ -189,6 +189,26 @@ def check_lg002(tree: ast.Module, source_lines: list[str], tracker: FlowTracker)
             continue
 
         obj_name = _get_attr_name(node.func.value) or "preprocessor"
+
+        # Skip HP search objects — they are caught by LG005
+        var_info = tracker.vars.get(obj_name)
+        if var_info and var_info.is_hp_search:
+            continue
+
+        # Skip model .fit() calls (not preprocessing) — only flag preprocessors
+        # A model.fit(X_test) is unusual but not "fit on test data" leakage
+        # in the same sense as a scaler. However, fitting a preprocessor on
+        # test data IS leakage, so flag it.
+        if var_info and not var_info.is_preprocessor:
+            continue
+
+        # Also check if the object name matches a known preprocessor class
+        # even if not tracked (e.g. inline constructor)
+        if not var_info:
+            call_name = _get_call_name_from_node(node)
+            if call_name not in PREPROCESSING_CLASSES:
+                continue
+
         line = node.lineno
 
         findings.append(Finding(
@@ -391,6 +411,25 @@ def check_lg005(tree: ast.Module, source_lines: list[str], tracker: FlowTracker)
                                       "tuning. Keep the test set for final evaluation only."),
                         ))
 
+        # Check for .predict(X_test) inside a loop (manual HP tuning pattern)
+        if method == "predict":
+            if node.args:
+                arg_name = _get_attr_name(node.args[0])
+                if arg_name and tracker.get_var_state(arg_name) == "test-derived":
+                    if _is_inside_loop(tree, node):
+                        findings.append(Finding(
+                            rule_id="LG005",
+                            title="Test set used for tuning (manual loop)",
+                            severity="HIGH",
+                            line=node.lineno,
+                            snippet=_get_snippet(source_lines, node.lineno),
+                            why=(f"model.predict() is called on test data ({arg_name}) "
+                                 f"inside a loop, suggesting manual hyperparameter search "
+                                 f"using the test set for model selection."),
+                            fix_hint=("Use cross-validation on training data for hyperparameter "
+                                      "tuning. Keep the test set for final evaluation only."),
+                        ))
+
     return findings
 
 
@@ -473,22 +512,36 @@ def check_lg007(tree: ast.Module, source_lines: list[str], tracker: FlowTracker)
 # ─────────────────────────────────────────────────────────────────────
 
 def check_lg008(tree: ast.Module, source_lines: list[str], tracker: FlowTracker) -> list[Finding]:
-    """Detect when accuracy_score is the only metric used."""
+    """Detect when accuracy_score is the only metric used.
+
+    Walks ALL Call nodes in the AST (including nested ones like
+    print(accuracy_score(...))) to find metric function calls.
+    """
     findings: list[Finding] = []
 
-    if "accuracy_score" not in tracker.metrics_used:
+    metric_funcs = {"accuracy_score", "precision_score", "recall_score",
+                    "f1_score", "roc_auc_score", "classification_report",
+                    "confusion_matrix", "mean_squared_error", "r2_score",
+                    "mean_absolute_error", "log_loss", "balanced_accuracy_score"}
+
+    metrics_found: set[str] = set()
+    acc_line = 0
+
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        name = _get_call_name_from_node(node)
+        if name in metric_funcs:
+            metrics_found.add(name)
+            if name == "accuracy_score" and acc_line == 0:
+                acc_line = node.lineno
+
+    if "accuracy_score" not in metrics_found:
         return findings
 
-    other_metrics = tracker.metrics_used - {"accuracy_score"}
+    other_metrics = metrics_found - {"accuracy_score"}
     if other_metrics:
         return findings  # Has other metrics, fine
-
-    # Find the line where accuracy_score is called
-    acc_line = 0
-    for line, func_name, _ in tracker.func_calls:
-        if func_name == "accuracy_score":
-            acc_line = line
-            break
 
     if acc_line:
         findings.append(Finding(
