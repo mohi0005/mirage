@@ -476,8 +476,13 @@ def check_lg006(tree: ast.Module, source_lines: list[str], tracker: FlowTracker)
 def check_lg007(tree: ast.Module, source_lines: list[str], tracker: FlowTracker) -> list[Finding]:
     """Detect train_test_split or estimators missing random_state."""
     findings: list[Finding] = []
+    seen: set[tuple[int, str]] = set()
 
     for line, func_name, args_info in tracker.func_calls:
+        if (line, func_name) in seen:
+            continue
+        seen.add((line, func_name))
+
         if func_name == "train_test_split":
             if not args_info.get("has_random_state"):
                 findings.append(Finding(
